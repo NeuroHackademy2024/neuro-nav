@@ -1,22 +1,14 @@
-# Voici demo
+# Neuro Nav Voici demo
 
-[![lite-badge](https://jupyterlite.rtfd.io/en/latest/_static/badge.svg)](https://voila-dashboards.github.io/voici-demo)
+[![lite-badge](https://jupyterlite.rtfd.io/en/latest/_static/badge.svg)](https://neurohackademy2024.github.io/neuro-nav)
 
-[Voici](https://github.com/voila-dashboards/voici) deployed as a static site to GitHub Pages, for demo purposes.
+[Neuro Nav](https://neurohackademy2024.github.io/neuro-nav) deployed as a static site to GitHub Pages, for demo purposes.
 
 It uses [jupyterlite-xeus](https://github.com/jupyterlite/xeus) to build the Emscripten environment, including the **xeus-python** kernel and run dependencies.
 
 ## ✨ Try it in your browser ✨
 
-https://voila-dashboards.github.io/voici-demo
-
-## 💡 How to make your own deployment
-
-small change here.
-
-https://user-images.githubusercontent.com/21197331/223079815-0ea78df4-5173-4adc-a2e4-e10b9593a9f4.webm
-
-Then your site will be published under https://{USERNAME}.github.io/{DEMO_REPO_NAME}
+https://neurohackademy2024.github.io/neuro-nav
 
 ## 📦 How to install extra packages
 
@@ -31,8 +23,9 @@ channels:
   - conda-forge
 dependencies:
   - xeus-python
-  - numpy
+  - numpy <2
   - matplotlib
+  - pandas <2
 ```
 
 Only ``no-arch`` packages from ``conda-forge`` and packages from ``emscripten-forge`` can be installed.
