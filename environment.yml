@@ -5,5 +5,6 @@ channels:
 dependencies:
   - xeus-python
   - pandas <2
+  - s3fs
   - bqplot
   - numpy <2
