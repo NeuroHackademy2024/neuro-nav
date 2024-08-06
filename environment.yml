@@ -8,3 +8,7 @@ dependencies:
   - s3fs
   - bqplot
   - numpy <2
+  - nibabel
+  - nilearn
+  - cloudpathlib
+  - pathlib
