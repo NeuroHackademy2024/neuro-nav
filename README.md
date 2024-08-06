@@ -2,6 +2,8 @@
 
 [![lite-badge](https://jupyterlite.rtfd.io/en/latest/_static/badge.svg)](https://neurohackademy2024.github.io/neuro-nav)
 
+An interactve app to explore behavioral and MRI data from the HCP dataset. 
+
 [Voici](https://github.com/voila-dashboards/voici) deployed as a static site to GitHub Pages, for demo purposes.
 
 It uses [jupyterlite-xeus](https://github.com/jupyterlite/xeus) to build the Emscripten environment, including the **xeus-python** kernel and run dependencies.
