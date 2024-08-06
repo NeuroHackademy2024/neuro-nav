@@ -12,6 +12,8 @@ https://voila-dashboards.github.io/voici-demo
 
 ## 💡 How to make your own deployment
 
+small change here.
+
 https://user-images.githubusercontent.com/21197331/223079815-0ea78df4-5173-4adc-a2e4-e10b9593a9f4.webm
 
 Then your site will be published under https://{USERNAME}.github.io/{DEMO_REPO_NAME}
