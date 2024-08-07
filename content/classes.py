@@ -3,6 +3,7 @@ import numpy as np
 import ipywidgets as widgets
 from IPython.display import HTML
 from bqplot import Figure, Scatter, Axis, LinearScale
+import io
 
 class TractPlot:
 
@@ -100,14 +101,15 @@ class TractPlot:
 
 
 
-class FileLoader:
+class FileLoader:    
     def __init__(self):
         # self._df = df
         # available_indicators = self._df['Indicator Name'].unique()
         # self._x_dropdown = self._create_indicator_dropdown(available_indicators, 0)
         # self._y_dropdown = self._create_indicator_dropdown(available_indicators, 1)
-        self._textbox = self._create_textbox()
-        self._filepath_status = False
+        # self._textbox = self._create_textbox()
+        # self._filepath_status = False
+        self._uploader = self._create_uploader()
 
         # x_scale = LinearScale()
         # y_scale = LinearScale()
@@ -124,7 +126,7 @@ class FileLoader:
         # self._year_slider, year_slider_box = self._create_year_slider(
         #     min(df['Year']), max(df['Year'])
         # )
-        _app_container = widgets.HBox([self._textbox], layout=widgets.Layout(align_items='center', flex='3 0 auto'))
+        _app_container = widgets.HBox([self._uploader])
         self.container = widgets.VBox([
             # widgets.HTML(
             #     (
@@ -137,24 +139,30 @@ class FileLoader:
                 # widgets.HTML(EXPLANATION, layout=widgets.Layout(margin='0 0 0 2em'))
             ])
         ], layout=widgets.Layout(flex='1 1 auto', margin='0 auto 0 auto', max_width='1024px'))
-        self._update_app()
+        #self._update_app()
 
-        self.get_status = self._filepath_status
+        #self.get_status = self._filepath_status
 
     # @classmethod
     # def from_csv(cls, path):
     #     df = pd.read_csv(path)
     #     return cls(df)
 
+
     # def _create_indicator_dropdown(self, indicators, initial_index):
     #     dropdown = widgets.Dropdown(options=indicators, value=indicators[initial_index])
     #     dropdown.observe(self._on_change, names=['value'])
     #     return dropdown
 
-    def _create_textbox(self):
-        textbox = widgets.Text(value='Paste path here', disabled=False)
-        textbox.observe(self._on_change, names=['value'])
-        return textbox
+    # def _create_textbox(self):
+    #     textbox = widgets.Text(value='Paste path here', disabled=False)
+    #     textbox.observe(self._on_change, names=['value'])
+    #     return textbox
+
+    def _create_uploader(self):
+        uploader = widgets.FileUpload(accept='.csv', multiple=False)
+        uploader.observe(self._on_change, names='value')
+        return uploader
 
     # def _create_year_slider(self, min_year, max_year):
     #     year_slider_label = widgets.Label('Year range: ')
@@ -168,10 +176,16 @@ class FileLoader:
     #     return year_slider, year_slider_box
 
     def _on_change(self, _):
-        self._update_app()
+        #self._filepath_status = True
+        content = self._uploader.value[0].content
+        content_to_bytes = io.BytesIO(content)
+        dataframe = pd.read_csv(content_to_bytes)
+        print(dataframe.head())
+        #self._update_app()
 
-    def _update_app(self):
-        filepath = self._textbox.value
+    #def _update_app(self):
+        
+        #filepath = self._textbox.value
         # x_indicator = self._x_dropdown.value
         # y_indicator = self._y_dropdown.value
         # year_range = self._year_slider.value
