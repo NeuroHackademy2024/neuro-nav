@@ -13,4 +13,3 @@ dependencies:
   - cloudpathlib
   - pathlib
   - matplotlib
-  - botocore==1.34.131
