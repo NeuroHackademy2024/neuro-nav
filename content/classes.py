@@ -107,6 +107,7 @@ class FileLoader:
         # self._x_dropdown = self._create_indicator_dropdown(available_indicators, 0)
         # self._y_dropdown = self._create_indicator_dropdown(available_indicators, 1)
         self._textbox = self._create_textbox()
+        self._filepath_status = False
 
         # x_scale = LinearScale()
         # y_scale = LinearScale()
@@ -137,6 +138,8 @@ class FileLoader:
             ])
         ], layout=widgets.Layout(flex='1 1 auto', margin='0 auto 0 auto', max_width='1024px'))
         self._update_app()
+
+        self.get_status = self._filepath_status
 
     # @classmethod
     # def from_csv(cls, path):
