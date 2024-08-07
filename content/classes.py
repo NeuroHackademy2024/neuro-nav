@@ -103,20 +103,19 @@ class TractPlot:
 
 class FileLoader:    
     def __init__(self):
+        self.data = None
         self._uploader = self._create_uploader()
 
         _app_container = widgets.HBox([self._uploader])
-        self.container = widgets.VBox([
-            widgets.HBox([_app_container])
-        ])
+        self.container = widgets.VBox([_app_container])
 
-    def _create_uploader(self):
+    def _create_uploader(self): #creates the file uploader widget and observes when there are changes
         uploader = widgets.FileUpload(accept='.csv', multiple=False)
         uploader.observe(self._on_change, names='value')
         return uploader
 
-    def _on_change(self, _):
+    def _on_change(self, _): #called when user uploads file using the widget
         content = self._uploader.value[0].content
         content_to_bytes = io.BytesIO(content)
         dataframe = pd.read_csv(content_to_bytes)
-        print(dataframe.head())
+        self.data = dataframe
