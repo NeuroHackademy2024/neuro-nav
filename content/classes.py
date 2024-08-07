@@ -106,7 +106,10 @@ class FileLoader:
         self.data = None
         self._uploader = self._create_uploader()
 
-        _app_container = widgets.HBox([self._uploader])
+        _app_container = widgets.VBox([
+            widgets.HTML(('<p>Viewing HCP demographics and behavioural data requires you to have registered on <i style="color:blue"><a href="www.humanconnectome.org">the HCP website</a></i>, accepted the data terms, and downloaded the Behavioural Data CSV file.</p>'
+                         '<p>If you do have this file, specify its local path below:</p>')),
+            self._uploader])
         self.container = widgets.VBox([_app_container])
 
     def _create_uploader(self): #creates the file uploader widget and observes when there are changes
@@ -115,7 +118,8 @@ class FileLoader:
         return uploader
 
     def _on_change(self, _): #called when user uploads file using the widget
+        #get the data:
         content = self._uploader.value[0].content
         content_to_bytes = io.BytesIO(content)
-        dataframe = pd.read_csv(content_to_bytes)
-        self.data = dataframe
+        #dataframe = pd.read_csv(content_to_bytes)
+        self.data = content_to_bytes
