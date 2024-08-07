@@ -108,7 +108,7 @@ class FileLoader:
         _app_container = widgets.HBox([self._uploader])
         self.container = widgets.VBox([
             widgets.HBox([_app_container])
-        ], layout=widgets.Layout(flex='1 1 auto', margin='0 auto 0 auto', max_width='1024px'))
+        ])
 
     def _create_uploader(self):
         uploader = widgets.FileUpload(accept='.csv', multiple=False)
