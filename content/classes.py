@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 import ipywidgets as widgets
-from IPython.display import HTML
+from IPython.display import HTML, display, clear_output
 from bqplot import Figure, Scatter, Axis, LinearScale
 import io
 import abc #for abstract classes / observer pattern
@@ -206,40 +206,40 @@ class App(Observer):
     
     def __init__(self, subject):
         super().__init__(subject)
-        print("init")
+
         df = pd.read_csv('dummy_dataframe.csv')
         self._df = df
-        self._reset_app()
-        # available_indicators = self._df['Indicator Name'].unique()
-        # self._x_dropdown = self._create_indicator_dropdown(available_indicators, 0)
-        # self._y_dropdown = self._create_indicator_dropdown(available_indicators, 1)
+        # self._reset_app()
+        available_indicators = self._df['Indicator Name'].unique()
+        self._x_dropdown = self._create_indicator_dropdown(available_indicators, 0)
+        self._y_dropdown = self._create_indicator_dropdown(available_indicators, 1)
 
-        # x_scale = LinearScale()
-        # y_scale = LinearScale()
+        x_scale = LinearScale()
+        y_scale = LinearScale()
 
-        # self._x_axis = Axis(scale=x_scale, label="X")
-        # self._y_axis = Axis(scale=y_scale, orientation="vertical", label="Y")
+        self._x_axis = Axis(scale=x_scale, label="X")
+        self._y_axis = Axis(scale=y_scale, orientation="vertical", label="Y")
 
-        # self._scatter = Scatter(
-        #     x=[], y=[], scales={"x": x_scale, "y": y_scale}
-        # )
+        self._scatter = Scatter(
+            x=[], y=[], scales={"x": x_scale, "y": y_scale}
+        )
 
-        # self._figure = Figure(marks=[self._scatter], axes=[self._x_axis, self._y_axis], layout=dict(width="99%"), animation_duration=1000)
+        self._figure = Figure(marks=[self._scatter], axes=[self._x_axis, self._y_axis], layout=dict(width="99%"), animation_duration=1000)
 
-        # self._year_slider, year_slider_box = self._create_year_slider(
-        #     min(df['Year']), max(df['Year'])
-        # )
+        self._year_slider, year_slider_box = self._create_year_slider(
+            min(df['Year']), max(df['Year'])
+        )
         
-        # _app_container = widgets.VBox([
-        #     widgets.HBox([self._x_dropdown, self._y_dropdown]),
-        #     self._figure,
-        #     year_slider_box
-        # ], layout=widgets.Layout(align_items='center', flex='3 0 auto'))
-        # self.container = widgets.VBox([
-        #     widgets.HBox([
-        #         _app_container,
-        #     ])
-        # ], layout=widgets.Layout(flex='1 1 auto', margin='0 auto 0 auto', max_width='1024px'))
+        _app_container = widgets.VBox([
+            widgets.HBox([self._x_dropdown, self._y_dropdown]),
+            self._figure,
+            year_slider_box
+        ], layout=widgets.Layout(align_items='center', flex='3 0 auto'))
+        self.container = widgets.VBox([
+            widgets.HBox([
+                _app_container,
+            ])
+        ], layout=widgets.Layout(flex='1 1 auto', margin='0 auto 0 auto', max_width='1024px'))
         self._update_app()
 
     def _create_indicator_dropdown(self, indicators, initial_index):
@@ -296,18 +296,18 @@ class App(Observer):
     def _reset_app(self):
         df = self._df
         available_indicators = self._df['Indicator Name'].unique()
-        self._x_dropdown = self._create_indicator_dropdown(available_indicators, 0)
-        self._y_dropdown = self._create_indicator_dropdown(available_indicators, 1)
+        self._x_dropdown.options = available_indicators
+        self._y_dropdown.options = available_indicators
 
-        x_scale = LinearScale(min=-100, max=100)
-        y_scale = LinearScale(min=-100, max=100)
+        # x_scale = LinearScale()
+        # y_scale = LinearScale()
 
-        self._x_axis = Axis(scale=x_scale, label="X")
-        self._y_axis = Axis(scale=y_scale, orientation="vertical", label="Y")
+        # self._x_axis = Axis(scale=x_scale, label="X")
+        # self._y_axis = Axis(scale=y_scale, orientation="vertical", label="Y")
 
-        self._scatter = Scatter(
-            x=[], y=[], scales={"x": x_scale, "y": y_scale}
-        )
+        # self._scatter = Scatter(
+        #     x=[], y=[], scales={"x": x_scale, "y": y_scale}
+        # )
 
         self._year_slider, year_slider_box = self._create_year_slider(
             min(df['Year']), max(df['Year'])
