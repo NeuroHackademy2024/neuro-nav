@@ -155,15 +155,20 @@ class Observer(ABC):
         ...
 
 
-class FileLoader:
+class FileLoader(Subject):
     '''
     This class implements the file loader widget from ipywidgets
     and also defines some functions for monitoring the file loader.
     When the user uses the widget to upload a local CSV file,
     the data are loaded into the class's data attribute.
+
+    Inherits from the Subject class, because it needs to be the one
+    to signal and update all the other plot classes.
     '''
     
     def __init__(self):
+        super().__init__()
+        
         self.data = None
         self._uploader = self._create_uploader()
 
