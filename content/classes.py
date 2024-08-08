@@ -193,7 +193,7 @@ class FileLoader(Subject):
         content_to_bytes = io.BytesIO(content)
         #dataframe = pd.read_csv(content_to_bytes)
         self.data = content_to_bytes
-        self.subject._notify(self.data) #send notification to observers
+        self._notify(self.data) #send notification to observers
 
 
 class App(Observer):
@@ -204,8 +204,8 @@ class App(Observer):
     be notified when there are updates.
     '''
     
-    def __init__(self):
-        super().__init__()
+    def __init__(self, subject):
+        super().__init__(subject)
         
         df = pd.read_csv('dummy_dataframe.csv')
         self._df = df
