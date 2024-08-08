@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 import ipywidgets as widgets
-from IPython.display import HTML, display, clear_output
+from IPython.display import HTML
 from bqplot import Figure, Scatter, Axis, LinearScale
 import io
 import abc #for abstract classes / observer pattern
