@@ -4,6 +4,8 @@ import ipywidgets as widgets
 from IPython.display import HTML
 from bqplot import Figure, Scatter, Axis, LinearScale
 import io
+import abc #for abstract classes / observer pattern
+from abc import ABC
 
 class TractPlot:
 
@@ -99,6 +101,58 @@ class TractPlot:
 
 
 
+class Subject:
+    '''
+    Watches and updates all registered observer objects.
+    '''
+    observers = []
+
+    def __init__(self):
+        self._observers = []
+
+    def _register_observer(self, observer):
+        '''
+        Add an observer to the observer list if it's not already there.
+        '''
+        if observer not in self._observers:
+            self._observers.append(observer)
+
+    def _unregister_observer(self, observer):
+        '''
+        Remove an observer from the observer list if it's in the list.
+        '''
+        if observer in self._observers:
+            self._observers.remove(observer)
+
+    def _notify(self):
+        '''
+        Iterates through and calls update on all of the observers.
+        '''
+        for i, obj in enumerate(self._observers):
+            obj._update()
+
+
+
+class Observer(ABC):
+    '''
+    Abstract class.
+    '''
+    
+    def __init__(self, subject):
+        '''
+        Register an observer with the subject.
+        '''
+        self._subject = subject
+        subject._register_observer(self)
+
+    @abc.abstractmethod
+    def update(self):
+        '''
+        This is an abstract method and will be overridden by update functions
+        that are defined within each child of the abstract observer class.
+        Therefore this method is not implemented here.
+        '''
+        ...
 
 
 class FileLoader:
