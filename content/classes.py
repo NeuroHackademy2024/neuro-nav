@@ -272,6 +272,7 @@ class App(Observer):
         '''
         df = pd.read_csv(data)
         self._df = df
+        print(df.head())
         self._new_data_reset()
         self._update_app()
 
