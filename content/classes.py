@@ -101,7 +101,14 @@ class TractPlot:
 
 
 
-class FileLoader:    
+class FileLoader:
+    '''
+    This class implements the file loader widget from ipywidgets
+    and also defines some functions for monitoring the file loader.
+    When the user uses the widget to upload a local CSV file,
+    the data are loaded into the class's data attribute.
+    '''
+    
     def __init__(self):
         self.data = None
         self._uploader = self._create_uploader()
@@ -125,15 +132,13 @@ class FileLoader:
         self.data = content_to_bytes
 
 
-
-
-
 class App:
-
+    '''
+    Demo interactive plotter app.
+    '''
+    
     def __init__(self, df):
         self._df = df
-        self._uploader = self._create_uploader()
-        
         available_indicators = self._df['Indicator Name'].unique()
         self._x_dropdown = self._create_indicator_dropdown(available_indicators, 0)
         self._y_dropdown = self._create_indicator_dropdown(available_indicators, 1)
@@ -150,16 +155,13 @@ class App:
 
         self._figure = Figure(marks=[self._scatter], axes=[self._x_axis, self._y_axis], layout=dict(width="99%"), animation_duration=1000)
 
-        self._year_slider, self._year_slider_box = self._create_year_slider(
+        self._year_slider, year_slider_box = self._create_year_slider(
             min(df['Year']), max(df['Year'])
         )
         _app_container = widgets.VBox([
-            widgets.HTML(('<p>Viewing HCP demographics and behavioural data requires you to have registered on <i style="color:blue"><a href="www.humanconnectome.org">the HCP website</a></i>, accepted the data terms, and downloaded the Behavioural Data CSV file.</p>'
-                         '<p>If you do have this file, specify its local path below:</p>')),
-            self._uploader,
             widgets.HBox([self._x_dropdown, self._y_dropdown]),
             self._figure,
-            self._year_slider_box
+            year_slider_box
         ], layout=widgets.Layout(align_items='center', flex='3 0 auto'))
         self.container = widgets.VBox([
             # widgets.HTML(
@@ -178,17 +180,9 @@ class App:
 
     @classmethod
     def from_csv(cls, path):
-        if path == None:
-            df = pd.read_csv('dummy_dataframe.csv')
-        else:
-            df = pd.read_csv(path)
+        df = pd.read_csv(path)
         return cls(df)
 
-    def _create_uploader(self): #creates the file uploader widget and observes when there are changes
-        uploader = widgets.FileUpload(accept='.csv', multiple=False)
-        uploader.observe(self._on_change, names='value')
-        return uploader
-        
     def _create_indicator_dropdown(self, indicators, initial_index):
         dropdown = widgets.Dropdown(options=indicators, value=indicators[initial_index])
         dropdown.observe(self._on_change, names=['value'])
@@ -205,27 +199,7 @@ class App:
         year_slider_box = widgets.HBox([year_slider_label, year_slider])
         return year_slider, year_slider_box
 
-    def _update_data(self, data):
-        self._df = pd.read_csv(data)
-        
-        available_indicators = self._df['Indicator Name'].unique()
-        self._x_dropdown = self._create_indicator_dropdown(available_indicators, 0)
-        self._y_dropdown = self._create_indicator_dropdown(available_indicators, 1)
-        print(self._x_dropdown.options)
-
-        self._figure = Figure(marks=[self._scatter], axes=[self._x_axis, self._y_axis], layout=dict(width="99%"), animation_duration=1000)
-        self._year_slider, self._year_slider_box = self._create_year_slider(
-            min(self._df['Year']), max(self._df['Year'])
-        )
-
     def _on_change(self, _):
-        #get the data:
-        content = self._uploader.value[0].content
-        content_to_bytes = io.BytesIO(content)
-        #dataframe = pd.read_csv(content_to_bytes)
-        #self.data = content_to_bytes
-        self._update_data(content_to_bytes)
-        
         self._update_app()
 
     def _update_app(self):
