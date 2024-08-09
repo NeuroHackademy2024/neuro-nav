@@ -1,5 +1,5 @@
 # NeuroNav Demo
-An interactve webapp to explore the HCP Young Adult dataset!
+An interactve web app to explore the HCP Young Adult dataset!
 
 [![lite-badge](https://jupyterlite.rtfd.io/en/latest/_static/badge.svg)](https://neurohackademy2024.github.io/neuro-nav)
 
