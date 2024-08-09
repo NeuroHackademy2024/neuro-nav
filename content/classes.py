@@ -196,7 +196,11 @@ class FileLoader(Subject):
         with self._out:
             print("Uploading...")
         content = self._uploader.value[0].content
+        with self._out:
+            print("Got Content")
         content_to_bytes = io.BytesIO(content)
+        with self._out:
+            print("Converted to bytes")
         self.data = content_to_bytes
         #dataframe = pd.read_csv(content_to_bytes)
         with self._out:
