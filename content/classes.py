@@ -297,8 +297,8 @@ class DemPlot(Observer):
         super().__init__(subject)
         
         # Create an Output widget for capturing print output
-        self.output_widget = widgets.Output()
-        display(self.output_widget)
+        #self.output_widget = widgets.Output()
+        #display(self.output_widget)
 
         df = pd.DataFrame({
             'Age': [np.nan],
@@ -494,7 +494,7 @@ class BehavPlot(Observer):
      
         self._measures = self._df.columns
         
-        print(self._measures)
+        #print(self._measures)
 
         age_options = [0]#['All Ages'] + list(df['Age'].unique())
         sex_options = [0]#['All'] + list(df['Gender'].unique())
