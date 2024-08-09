@@ -174,8 +174,8 @@ class FileLoader(Subject):
         super().__init__()
         
         self.data = None
-        self._uploader = self._create_uploader()
         self._out = widgets.Output(layout={'border': '1px solid black'})
+        self._uploader = self._create_uploader()
 
         _app_container = widgets.VBox([
             widgets.HTML(('<p>Viewing HCP demographics and behavioural data requires you to have registered on <i style="color:blue"><a href="www.humanconnectome.org">the HCP website</a></i>, accepted the data terms, and downloaded the Behavioural Data CSV file.</p>'
@@ -187,6 +187,8 @@ class FileLoader(Subject):
     def _create_uploader(self): #creates the file uploader widget and observes when there are changes
         uploader = widgets.FileUpload(accept='.csv', multiple=False)
         uploader.observe(self._on_change, names='value')
+        with self._out:
+            print("Ready to upload")
         return uploader
 
     def _on_change(self, _): #called when user uploads file using the widget
