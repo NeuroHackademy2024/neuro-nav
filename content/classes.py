@@ -175,11 +175,13 @@ class FileLoader(Subject):
         
         self.data = None
         self._uploader = self._create_uploader()
+        self._out = widgets.Output(layout={'border': '1px solid black'})
 
         _app_container = widgets.VBox([
             widgets.HTML(('<p>Viewing HCP demographics and behavioural data requires you to have registered on <i style="color:blue"><a href="www.humanconnectome.org">the HCP website</a></i>, accepted the data terms, and downloaded the Behavioural Data CSV file.</p>'
                          '<p>If you do have this file, specify its local path below:</p>')),
-            self._uploader])
+            self._uploader,
+            self._out])
         self.container = widgets.VBox([_app_container])
 
     def _create_uploader(self): #creates the file uploader widget and observes when there are changes
@@ -191,8 +193,11 @@ class FileLoader(Subject):
         #get the data:
         content = self._uploader.value[0].content
         content_to_bytes = io.BytesIO(content)
-        #dataframe = pd.read_csv(content_to_bytes)
         self.data = content_to_bytes
+        #dataframe = pd.read_csv(content_to_bytes)
+        with self._out:
+            print("Upload successful")
+            print(self.data)
         self._notify(self.data) #send notification to observers
 
 
@@ -229,8 +234,10 @@ class App(Observer):
         self._year_slider, self._year_slider_box = self._create_year_slider(
             min(df['Year']), max(df['Year'])
         )
-        
+
+        self._out2 = widgets.Output(layout={'border': '1px solid black'})
         _app_container = widgets.VBox([
+            self._out2,
             widgets.HBox([self._x_dropdown, self._y_dropdown]),
             self._figure,
             self._year_slider_box
@@ -272,7 +279,9 @@ class App(Observer):
         '''
         df = pd.read_csv(data)
         self._df = df
-        print(df.head())
+        with self._out2:
+            print("Upload successful")
+            print(df.head())
         self._new_data_reset()
         self._update_app()
 
