@@ -3,7 +3,7 @@ channels:
   - https://repo.mamba.pm/emscripten-forge
   - conda-forge
 dependencies:
-  - xeus-python=0.15.2
+  - xeus-python
   - pandas <2
   - s3fs=2024.6.1
   - bqplot=0.12.43
