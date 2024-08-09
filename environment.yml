@@ -5,12 +5,12 @@ channels:
 dependencies:
   - xeus-python
   - pandas <2
-  - s3fs=2024.6.1
-  - bqplot=0.12.43
-  - numpy=1.23.5
-  - nibabel=5.2.1
-  - nilearn=0.10.4
-  - cloudpathlib=0.18.1
+  - s3fs=2024.6
+  - bqplot=0.12
+  - numpy=1.23
+  - nibabel=5.2
+  - nilearn=0.10
+  - cloudpathlib=0.18
   - pathlib
-  - matplotlib=3.9.1
-  - ipywidgets=8.1.3
+  - matplotlib=3.9
+  - ipywidgets=8.1
