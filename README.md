@@ -1,5 +1,5 @@
-# Neuro Nav Voici demo
-An interactve app to explore behavioral and MRI data from the HCP dataset. 
+# NeuroNav Demo
+An interactve webapp to explore the HCP Young Adult dataset!
 
 [![lite-badge](https://jupyterlite.rtfd.io/en/latest/_static/badge.svg)](https://neurohackademy2024.github.io/neuro-nav)
 
