@@ -11,11 +11,11 @@ class BehavPlot:
         self._df = df[['Subject','Age','Gender','PicSeq_AgeAdj','CardSort_AgeAdj','Flanker_AgeAdj','ListSort_AgeAdj','ReadEng_AgeAdj','PicVocab_AgeAdj','ProcSpeed_AgeAdj', 'FS_TotCort_GM_Vol','FS_SubCort_GM_Vol','FS_Total_GM_Vol','FS_L_WM_Vol','FS_R_WM_Vol',	'FS_Tot_WM_Vol']].dropna(how='any')
         
         
-        print(len(self._df))
-        print(self._df.index)
+        # print(len(self._df))
+        # print(self._df.index)
      
         self._measures = self._df.columns[3:]
-        print(self._measures)
+        # print(self._measures)
 
         age_options = ['All Ages'] + list(df['Age'].unique())
         sex_options = ['All'] + list(df['Gender'].unique())
@@ -52,16 +52,8 @@ class BehavPlot:
             # year_slider_box
         ], layout=widgets.Layout(align_items='center', flex='3 0 auto'))
         self.container = widgets.VBox([
-            # widgets.HTML(
-            #     (
-            #         '<h1>Development indicators. A Voici dashboard, running entirely in your browser!</h1>'
-            #         '<h2 class="app-subtitle"><a href="https://github.com/pbugnion/voila-gallery/blob/master/country-indicators/index.ipynb">Link to code</a></h2>'
-            #     ),
-            #     layout=widgets.Layout(margin='0 0 5em 0')
-            # ),
             widgets.HBox([
                 _app_container,
-                #widgets.HTML(EXPLANATION, layout=widgets.Layout(margin='0 0 0 2em'))
             ])
         ], layout=widgets.Layout(flex='1 1 auto', margin='0 auto 0 auto', max_width='1024px'))
         
@@ -87,17 +79,6 @@ class BehavPlot:
         checkbox = widgets.Checkbox(value=initial_value, description=desc, disabled=False, indent=False)
         checkbox.observe(self._on_change, names=['value'])
         return checkbox
-        
-    # def _create_year_slider(self, min_year, max_year):
-    #     year_slider_label = widgets.Label('Year range: ')
-    #     year_slider = widgets.IntRangeSlider(
-    #         min=min_year, max=max_year,
-    #         layout=widgets.Layout(width='500px'),
-    #         continuous_update=False
-    #     )
-    #     year_slider.observe(self._on_change, names=['value'])
-    #     year_slider_box = widgets.HBox([year_slider_label, year_slider])
-    #     return year_slider, year_slider_box
 
     def _on_change(self, _):
         self._update_app()
@@ -125,7 +106,6 @@ class BehavPlot:
                 self._scatter.x = x
                 self._scatter.y = y
             
-        
 
                 if showreg:
                     self._line.x = [np.min(x), np.max(x)]
