@@ -12,7 +12,7 @@ class TractPlot:
 
     def __init__(self, df):
         self._df = df
-        print(self._df.head())
+        ##print(self._df.head())
      
         available_tracts = self._df['tractID'].unique()
 
@@ -169,7 +169,8 @@ class FileLoader(Subject):
         #get the data:
         content = next(iter(self._uploader.value))['content']
         content_to_bytes = BytesIO(content)
-        self.data = content_to_bytes
+        df = pd.read_csv(content_to_bytes)
+        self.data = df
         self._notify(self.data) #send notification to observers
 
 
@@ -398,11 +399,16 @@ class DemPlot(Observer):
         -----------
         data : csv in bytes, use pd.read_csv(data)
         '''
-        df = pd.read_csv(data)
-        self._df = df
+        #print(data)
+        #df = pd.read_csv(data)
+        #self._df = df
+        self._df = data
+        #print(self._df)
+
 
         age = self._df['Age'] #T1_Count
         gender = self._df['Gender']
+        #print(age)
 
         age_counts = age.value_counts()
         # Sort age_counts by index to ensure alphanumerical order
@@ -565,9 +571,10 @@ class BehavPlot(Observer):
         -----------
         data : csv in bytes, use pd.read_csv(data)
         '''
-        df = pd.read_csv(data)
-        self._df = df
-        # print(self._df)
+        #df = pd.read_csv(data)
+        #self._df = df
+        self._df = data
+        #print(self._df)
         self._new_data_reset()
         
         self._update_app()
@@ -576,9 +583,9 @@ class BehavPlot(Observer):
         
         x_measure = self._x_dropdown.value
         y_measure = self._y_dropdown.value
-        print(self._df.head())
-        print(self._x_dropdown.options)
-        print(self._y_dropdown.options)
+        #print(self._df.head())
+        #print(self._x_dropdown.options)
+        #print(self._y_dropdown.options)
         # year_range = self._year_slider.value
 
         showreg = self._checkbox.value
@@ -588,12 +595,12 @@ class BehavPlot(Observer):
             
             
                 x = self._df[x_measure]
-                print(x_measure)
-                print(y_measure)
+                #print(x_measure)
+                #print(y_measure)
                 y = self._df[y_measure]
 
-                print(x.head())
-                print(y.head())
+                #print(x.head())
+                #print(y.head())
 
                         
                 x_scale = LinearScale()
@@ -613,7 +620,7 @@ class BehavPlot(Observer):
                 self._scatter.x = x
                 self._scatter.y = y
 
-                print(self._scatter)
+                #print(self._scatter)
             
 
                 if showreg:
