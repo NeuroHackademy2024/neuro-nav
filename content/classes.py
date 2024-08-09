@@ -193,6 +193,8 @@ class FileLoader(Subject):
 
     def _on_change(self, _): #called when user uploads file using the widget
         #get the data:
+        with self._out:
+            print("Uploading...")
         content = self._uploader.value[0].content
         content_to_bytes = io.BytesIO(content)
         self.data = content_to_bytes
