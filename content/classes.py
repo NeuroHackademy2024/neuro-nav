@@ -3,7 +3,7 @@ import numpy as np
 import ipywidgets as widgets
 from IPython.display import HTML
 from bqplot import Figure, Scatter, Axis, LinearScale
-import io
+from io import StringIO, BytesIO
 import abc #for abstract classes / observer pattern
 from abc import ABC
 
@@ -185,7 +185,7 @@ class FileLoader(Subject):
         self.container = widgets.VBox([_app_container])
 
     def _create_uploader(self): #creates the file uploader widget and observes when there are changes
-        uploader = widgets.FileUpload(accept='.csv', multiple=False)
+        uploader = widgets.FileUpload(accept='*.csv')
         uploader.observe(self._on_change, names='value')
         with self._out:
             print("Ready to upload")
@@ -195,13 +195,18 @@ class FileLoader(Subject):
         #get the data:
         with self._out:
             print("Uploading...")
-        content = self._uploader.value[0].content
+        # content = self._uploader.value[0].content
+        content = next(iter(self._uploader.value))['content']
         with self._out:
             print("Got Content")
-        content_to_bytes = io.BytesIO(content)
+        content_to_bytes = BytesIO(content)
+        # io = StringIO()
+        # io.write(content.decode('utf-8'))
+        # io.seek(0)
         with self._out:
             print("Converted to bytes")
         self.data = content_to_bytes
+        # self.data = io
         #dataframe = pd.read_csv(content_to_bytes)
         with self._out:
             print("Upload successful")
