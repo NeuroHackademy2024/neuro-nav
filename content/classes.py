@@ -327,38 +327,22 @@ class DemPlot(Observer):
             'Gender': [np.nan]
         })
         self._df = df
-        print(self._df.head())
      
         age = self._df['Age'] #T1_Count
         gender = self._df['Gender']
 
         age_counts = age.value_counts()
         gender_counts = gender.value_counts()
-        print(age_counts)
-        print(age_counts.index)
 
-  #      self._y_measures = {'Fractional Anisotropy':'dki_fa','Mean Diffusivity':'dki_md','Mean Kurtosis':'dki_mk','Axonal Water Fraction':'dki_awf'}
         age_options = ['All ages'] + sorted(age.unique())
         self._x_dropdown = self._create_dropdown(age_options, 0)
-   #     self._y_dropdown = self._create_dropdown(list(self._y_measures.keys()), 0)
 
         x_scale = OrdinalScale()
         y_scale = LinearScale()
-        #pie_scale = LinearScale(min=-0.5, max=0.5)
 
         self._x_axis = Axis(scale=x_scale, label="Age")
         self._y_axis = Axis(scale=y_scale, orientation="vertical", label="N")
 
-        #self._scatter = Scatter(
-  #          x=[], y=[], scales={"x": x_scale, "y": y_scale}
-   #     )
-
-        print(age.head())
-        age.describe()
-        self._hist = Hist(sample=age, bins=3, scales={'sample': x_scale, 'count': y_scale})
-        print(age_counts)
-        print(age_counts.index)
-        print(age_counts.values)
         self._age_bars = Bars(x=age_counts.index, y=age_counts.values,
                           scales={'x': x_scale, 'y': y_scale})
         tooltip = Tooltip(fields=['x', 'y'], labels=['Age', 'N'])
@@ -420,26 +404,10 @@ class DemPlot(Observer):
         ], layout=widgets.Layout(flex='1 1 auto', margin='0 auto 0 auto', max_width='1024px'))
         self._update_app()
 
-  #  @classmethod
-   # def from_csv(cls, path):
-    #    df = pd.read_csv(path)
-     #   return cls(df)
-
     def _create_dropdown(self, options, initial_index):
         dropdown = widgets.Dropdown(options=options, value=options[initial_index])
         dropdown.observe(self._on_change, names=['value'])
         return dropdown
-
-    # def _create_year_slider(self, min_year, max_year):
-    #     year_slider_label = widgets.Label('Year range: ')
-    #     year_slider = widgets.IntRangeSlider(
-    #         min=min_year, max=max_year,
-    #         layout=widgets.Layout(width='500px'),
-    #         continuous_update=False
-    #     )
-    #     year_slider.observe(self._on_change, names=['value'])
-    #     year_slider_box = widgets.HBox([year_slider_label, year_slider])
-    #     return year_slider, year_slider_box
 
     def _on_change(self, _):
         self._update_app()
@@ -495,8 +463,6 @@ class DemPlot(Observer):
         colors = [highlight_color if val == age_selected else default_color for val in self._age_bars.x]
         self._age_bars.colors = colors
 
-        with self._hist.hold_sync():
-            pass
 #        tract = self._x_dropdown.value
  #       # x_indicator = self._x_dropdown.value
   #      y_indicator = self._y_dropdown.value
