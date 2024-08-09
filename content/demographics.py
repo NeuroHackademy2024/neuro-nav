@@ -136,23 +136,7 @@ class DemPlot:
         default_color = 'steelblue'
         highlight_color = 'red'
         colors = [highlight_color if val == age_selected else default_color for val in self._age_bars.x]
-        print(colors)
         self._age_bars.colors = colors
-
-        #TROUBLESHOOTING:
-        # Create an Output widget
-        output_widget = widgets.Output()
-        
-        # Example usage: Capture print output
-        with output_widget:
-            print("This will be displayed in the browser!")
-            # Any other print statements or operations you want to capture
-            print("Another message to capture.")
-            print(age_selected)
-        
-        # Display the output widget in the notebook
-        display(output_widget)
-
 
         with self._hist.hold_sync():
             pass
